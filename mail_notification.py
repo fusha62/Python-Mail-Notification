@@ -7,10 +7,12 @@ import sys
 parser = argparse.ArgumentParser(description='Mail Notification for Ubuntu.')
 parser.add_argument('-s','--servername', nargs=1,
 		    metavar='<servername>',
-		    help='IMAP server address')
+		    help='IMAP server address',
+		    required=True)
 parser.add_argument('-u','--username', nargs=1,
 		    metavar='<userID>',
-		    help='IMAP server address')
+		    help='your user ID',
+		    required=True)
 
 args = parser.parse_args()
 servername = args.servername[0]
