@@ -3,6 +3,8 @@
 
 import argparse
 import sys
+import getpass
+import imaplib
 
 parser = argparse.ArgumentParser(description='Mail Notification for Ubuntu.')
 parser.add_argument('-s','--servername', nargs=1,
@@ -17,6 +19,7 @@ parser.add_argument('-u','--username', nargs=1,
 args = parser.parse_args()
 servername = args.servername[0]
 username = args.username[0]
+password = getpass.getpass()
 
 print(servername)
 print(username)
