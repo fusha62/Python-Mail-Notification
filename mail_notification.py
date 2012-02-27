@@ -21,8 +21,10 @@ servername = args.servername[0]
 username = args.username[0]
 password = getpass.getpass()
 
-print(servername)
-print(username)
+print "IMAP Server : ",servername
+print "IMAP User Name : ",username
+
+print "====++++  New Mail Waiting  ++++===="
 
 mail = imaplib.IMAP4_SSL(servername)
 mail.login(username,password)
