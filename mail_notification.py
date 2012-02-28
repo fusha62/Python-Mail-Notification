@@ -30,10 +30,11 @@ print "IMAP Server        : ",servername
 print "IMAP User Name     : ",username
 print "Refresh Time [sec] : ",set_time
 
-print "====++++  New Mail Waiting  ++++===="
-
 mail = imaplib.IMAP4_SSL(servername)
 mail.login(username,password)
+
+print "====++++  New Mail Waiting  ++++===="
+maillist_length = 0
 
 while True:
 	mail.list()
@@ -41,5 +42,9 @@ while True:
 	status,maillist = mail.search(None,"(UNSEEN)")
 	if status == "OK":
 		if maillist[0] is not '':
-			print "New Mail"
+			if maillist_length < len(maillist[0]):
+				print "New Mail"
+				maillist_length = len(maillist[0])
+		else:
+			maillist_length = 0
 	time.sleep(set_time)
