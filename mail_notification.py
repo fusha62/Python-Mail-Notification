@@ -6,6 +6,8 @@ import sys
 import time
 import getpass
 import imaplib
+import pynotify
+from os import path
 
 parser = argparse.ArgumentParser(description='Mail Notification for Ubuntu.')
 parser.add_argument('-s','--servername', nargs=1,
@@ -44,6 +46,10 @@ while True:
 		if maillist[0] is not '':
 			if maillist_length < len(maillist[0]):
 				print "New Mail"
+				pynotify.init( "New Mail" )
+				image_dir = path.dirname( path.abspath( __file__ ) ) + "images/mail.png"
+				noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
+				noti.show()
 				maillist_length = len(maillist[0])
 		else:
 			maillist_length = 0
