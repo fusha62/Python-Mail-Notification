@@ -47,7 +47,7 @@ while True:
 			if maillist_length < len(maillist[0]):
 				print "New Mail"
 				pynotify.init( "New Mail" )
-				image_dir = path.dirname( path.abspath( __file__ ) ) + "images/mail.png"
+				image_dir ='{0}/{1}'.format( path.dirname( path.abspath( __file__ ) ), "images/mail.png")
 				noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
 				noti.show()
 				maillist_length = len(maillist[0])
