@@ -4,6 +4,7 @@
 import argparse
 import sys
 import time
+import datetime
 import getpass
 import imaplib
 import pynotify
@@ -45,11 +46,20 @@ while True:
 	if status == "OK":
 		if maillist[0] is not '':
 			if maillist_length < len(maillist[0]):
-				print "New Mail"
+
+				### get local time ###
+				dtime = datetime.datetime.today()
+
+				### print terminal ###
+				print '[%s-%s-%s %s:%s:%s] : New Mail' % (dtime.year, dtime.month, dtime.day, dtime.hour, dtime.minute, dtime.second)
+
+				### Python Notify ###
 				pynotify.init( "New Mail" )
 				image_dir ='{0}/{1}'.format( path.dirname( path.abspath( __file__ ) ), "images/mail.png")
 				noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
 				noti.show()
+
+				### maillist_length reset ###
 				maillist_length = len(maillist[0])
 		else:
 			maillist_length = 0
