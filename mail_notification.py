@@ -43,24 +43,24 @@ while True:
 	mail.list()
 	mail.select("Inbox")
 	status,maillist = mail.search(None,"(UNSEEN)")
-	if status == "OK":
-		if maillist[0] is not '':
-			if maillist_length < len(maillist[0]):
+	maillist = maillist[0].split()
+	if (status == "OK") and  (len(maillist) > 0) :
+		if maillist_length < len(maillist):
+			
+			### get local time ###
+			dtime = datetime.datetime.today()
+			
+			### print terminal ###
+			print '[%s-%s-%s %s:%s:%s] : New Mail' % (dtime.year, dtime.month, dtime.day, dtime.hour, dtime.minute, dtime.second)
 
-				### get local time ###
-				dtime = datetime.datetime.today()
+			### Python Notify ###
+			pynotify.init( "New Mail" )
+			image_dir ='{0}/{1}'.format( path.dirname( path.abspath( __file__ ) ), "images/mail.png")
+			noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
+			noti.show()
 
-				### print terminal ###
-				print '[%s-%s-%s %s:%s:%s] : New Mail' % (dtime.year, dtime.month, dtime.day, dtime.hour, dtime.minute, dtime.second)
-
-				### Python Notify ###
-				pynotify.init( "New Mail" )
-				image_dir ='{0}/{1}'.format( path.dirname( path.abspath( __file__ ) ), "images/mail.png")
-				noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
-				noti.show()
-
-				### maillist_length reset ###
-				maillist_length = len(maillist[0])
-		else:
-			maillist_length = 0
+		       	### maillist_length reset ###
+			maillist_length = len(maillist)
+	else:
+		maillist_length = 0
 	time.sleep(set_time)
