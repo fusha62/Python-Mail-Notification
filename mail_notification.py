@@ -19,9 +19,14 @@ def ret_passwd_from_keyrings(keyring_name,servername):
 		if item_info.get_display_name() == servername:
 			passwd = item_info.get_secret()
 	return passwd
-def entry_passwd_to_keyrings(keyring_name,servername,passwd):
+def entry_passwd_to_keyrings(keyring_name,servername,username,passwd):
+	atts = {
+		'application' : 'Python mail notification',
+		'username' : username,
+		'server' : servername,
+		}
 	gk.item_create_sync(keyring_name, gk.ITEM_GENERIC_SECRET,
-			    servername,{},passwd,True)
+			    servername,atts,passwd,True)
 
 parser = argparse.ArgumentParser(description='Mail Notification for Ubuntu.')
 parser.add_argument('-s','--servername', nargs=1,
@@ -49,7 +54,7 @@ if args.gk:
 	password = ret_passwd_from_keyrings('login',servername)
 	if password == '':
 		password = getpass.getpass()
-		entry_passwd_to_keyrings('login',servername,password)
+		entry_passwd_to_keyrings('login',servername,username,password)
 else:
 	password = getpass.getpass()
 
