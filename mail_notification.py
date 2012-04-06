@@ -9,7 +9,9 @@ import getpass
 import imaplib
 import pynotify
 import gnomekeyring as gk
+import subprocess
 from os import path
+
 
 def ret_passwd_from_keyrings(keyring_name,servername):
 	item_keys = gk.list_item_ids_sync(keyring_name)
@@ -43,6 +45,9 @@ parser.add_argument('-t','--time', nargs=1, default=[60], type=int,
 parser.add_argument('-gk','--with-gnome-keyring', dest='gk',
 		    action="store_true", default=False,
 		    help="Using Gnome-Keyring (Save Password)")
+parser.add_argument('-c','--command',default='',
+		    metavar='<command>',
+		    help="running command when mail notify")
 
 args = parser.parse_args()
 servername = args.servername[0]
@@ -87,6 +92,11 @@ while True:
 			image_dir ='{0}/{1}'.format( path.dirname( path.abspath( __file__ ) ), "images/mail.png")
 			noti = pynotify.Notification("New Mail", "You got mail..", image_dir)
 			noti.show()
+
+			### Running Command ###
+			if (args.command != '') :
+				subprocess.call(args.command, shell=True)
+			
 
 		       	### maillist_length reset ###
 			maillist_length = len(maillist)
