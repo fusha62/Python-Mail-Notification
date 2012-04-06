@@ -85,7 +85,7 @@ while True:
 			dtime = datetime.datetime.today()
 			
 			### print terminal ###
-			print '[%s-%s-%s %s:%s:%s] : New Mail' % (dtime.year, dtime.month, dtime.day, dtime.hour, dtime.minute, dtime.second)
+			print '[',dtime.strftime("%Y-%m-%d %H:%M:%S"),']  : New Mail'
 
 			### Python Notify ###
 			pynotify.init( "New Mail" )
